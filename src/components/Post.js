@@ -21,7 +21,7 @@ export default function Post({ post }) {
           </ul>
         </div>
         <h2 className='text-2xl mb-4'>{title}</h2>
-        <p className='line-clamp-2'>{parse(content)}</p>
+        <div className='line-clamp-2'>{parse(content)}</div>
       </a>
     </li>
   );
