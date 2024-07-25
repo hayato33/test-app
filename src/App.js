@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import './output.css';
+import { posts } from './data/posts';
+import Post from './components/Post';
 
-function App() {
+export default function App() {
+  console.log(posts);
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>test</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+    <>
+      <header className='p-6 flex justify-between bg-gray-900 text-white font-bold'>
+        <h1>
+          <a href=''>Blog</a>
+        </h1>
+        <a href=''>お問い合わせ</a>
       </header>
-    </div>
+      <ul className='grid gap-6 max-w-3xl mt-8 mx-auto'>
+        {posts.map((post) => (
+          <Post post={post} />
+        ))}
+      </ul>
+    </>
   );
 }
-
-export default App;
