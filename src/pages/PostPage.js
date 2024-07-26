@@ -4,9 +4,9 @@ import parse from 'html-react-parser';
 
 export default function PostPage() {
   const { id } = useParams();
-  const { title, thumbnailUrl, createdAt, categories, content } = posts.find(
-    (post) => post['id'] === Number(id)
-  );
+  const post = posts.find((p) => p['id'] === Number(id));
+  if (!post) return <div>記事が存在しません。</div>;
+  const { title, thumbnailUrl, createdAt, categories, content } = post;
   const date = new Date(createdAt);
 
   return (
