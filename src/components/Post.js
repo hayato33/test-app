@@ -14,7 +14,10 @@ export default function Post({ post }) {
           <ul className='flex'>
             {categories.map((category) => {
               return (
-                <li className='text-blue-600 border border-blue-600 ml-2 p-1 text-sm rounded'>
+                <li
+                  key={category}
+                  className='text-blue-600 border border-blue-600 ml-2 p-1 text-sm rounded'
+                >
                   {category}
                 </li>
               );
