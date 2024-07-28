@@ -2,6 +2,7 @@ import './output.css';
 import { Link, Route, Routes } from 'react-router-dom';
 import TopPage from './pages/TopPage';
 import PostPage from './pages/PostPage';
+import ContactPage from './pages/ContactPage';
 
 export default function App() {
   return (
@@ -10,12 +11,13 @@ export default function App() {
         <h1>
           <Link to='/'>Blog</Link>
         </h1>
-        <a href=''>お問い合わせ</a>
+        <Link to='/contact'>お問い合わせ</Link>
       </header>
 
       <Routes>
         <Route path='/' element={<TopPage />} />
         <Route path='/posts/:id' element={<PostPage />} />
+        <Route path='/contact' element={<ContactPage />} />
       </Routes>
     </>
   );
