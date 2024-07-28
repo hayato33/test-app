@@ -1,10 +1,26 @@
 import { useParams } from 'react-router-dom';
-import { posts } from '../data/posts';
 import parse from 'html-react-parser';
+import { useEffect, useState } from 'react';
 
 export default function PostPage() {
   const { id } = useParams();
-  const post = posts.find((p) => p['id'] === Number(id));
+  const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetcher = async () => {
+      const res = await fetch(
+        `https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`
+      );
+      const { post } = await res.json();
+      setPost(post);
+      setIsLoading(false);
+    };
+
+    fetcher();
+  }, [id]);
+
+  if (isLoading) return <div>読み込み中…</div>;
   if (!post) return <div>記事が存在しません。</div>;
   const { title, thumbnailUrl, createdAt, categories, content } = post;
   const date = new Date(createdAt);
@@ -22,7 +38,10 @@ export default function PostPage() {
             <ul className='flex'>
               {categories.map((category) => {
                 return (
-                  <li className='text-blue-600 border border-blue-600 ml-2 p-1 text-sm rounded'>
+                  <li
+                    key={category}
+                    className='text-blue-600 border border-blue-600 ml-2 p-1 text-sm rounded'
+                  >
                     {category}
                   </li>
                 );
