@@ -14,55 +14,33 @@ export default function ContactPage() {
   const messageChange = (e) => setMessage(e.target.value);
 
   const validate = () => {
-    let isValid = true;
-    if (name === '') {
-      isValid = false;
-      setNameErrorMessage('お名前は必須です。');
-    } else if (name.length > 30) {
-      isValid = false;
-      setNameErrorMessage('お名前は30文字以内で入力してください');
-    } else {
-      setNameErrorMessage('');
-    }
-    if (email === '') {
-      isValid = false;
-      setEmailErrorMessage('メールアドレスは必須です。');
-    } else if (!email.match(/.+@.+\..+/)) {
-      isValid = false;
-      setEmailErrorMessage('メールアドレスの形式が正しくありません。');
-    } else {
-      setEmailErrorMessage('');
-    }
-    if (message === '') {
-      isValid = false;
-      setMessageErrorMessage('本文は必須です。');
-    } else if (message.length > 500) {
-      isValid = false;
-      setMessageErrorMessage('本文は500文字以内で入力してください');
-    } else {
-      setMessageErrorMessage('');
-    }
-    return isValid;
+    const nameError = name === '' ? 'お名前は必須です。' : name.length > 30 ? 'お名前は30文字以内で入力してください。' : '';
+    setNameErrorMessage(nameError);
+    const emailError = email === '' ? 'メールアドレスは必須です。' : !email.match(/.+@.+\..+/) ? 'メールアドレスの形式が正しくありません。' : '';
+    setEmailErrorMessage(emailError);
+    const messageError = message === '' ? '本文は必須です。' : message.length > 500 ? '本文は500文字以内で入力してください。' : '';
+    setMessageErrorMessage(messageError);
+    return !nameError && !emailError && !messageError;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     // バリデーション
-    if (validate()) {
-      const apiUrl = 'https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/contacts';
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, message }),
-      };
-      await fetch(apiUrl, requestOptions);
-      alert('送信しました');
-      handleClear(e);
-    }
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    const apiUrl = 'https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/contacts';
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, message }),
+    };
+    await fetch(apiUrl, requestOptions);
+    alert('送信しました');
+    handleClear(e);
     setIsSubmitting(false);
   };
 
