@@ -14,6 +14,7 @@ export default function ContactPage() {
   const messageChange = (e) => setMessage(e.target.value);
 
   const validate = () => {
+    clearErrorMessages();
     const nameError = name === '' ? 'お名前は必須です。' : name.length > 30 ? 'お名前は30文字以内で入力してください。' : '';
     setNameErrorMessage(nameError);
     const emailError = email === '' ? 'メールアドレスは必須です。' : !email.match(/.+@.+\..+/) ? 'メールアドレスの形式が正しくありません。' : '';
@@ -49,6 +50,9 @@ export default function ContactPage() {
     setName('');
     setEmail('');
     setMessage('');
+  };
+
+  const clearErrorMessages = () => {
     setNameErrorMessage('');
     setEmailErrorMessage('');
     setMessageErrorMessage('');
